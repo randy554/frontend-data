@@ -12,7 +12,7 @@
  Deze gegevens moeten uit de dataset van het RDW worden gefilterd en worden opgeschoond voor gebruik. Het eindresultaat
  is een serie bar charts die de verhoudingen in kaart brengen tussen moderne en niet moderne parkeer garages.
  
- Het huidige concept is een iteratie op een voorgaande [concept](http://example.com). 
+ Het huidige concept is een iteratie op een voorgaande [concept](https://github.com/randy554/frontend-data/wiki/Concepten). 
   
   __Parkeer garages met/zonder oplaadpunten__
 [![concept-oplaadpunten.png](https://i.postimg.cc/4yYvznLH/concept-oplaadpunten.png)](https://postimg.cc/gLP6pcPG)
