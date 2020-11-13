@@ -83,6 +83,7 @@
 * Laurens Arnoudse voor live coding demo's
 * Jonah Meijers voor het omzetten van de dataset naar .JSON
 * Robert Spier voor live demo JSON file import.
+* Danny de Vries voor live demo async en promise.
 
 ## Bronnen
 
