@@ -22,6 +22,8 @@ getData(parkeerGaragesEndpoint).then(RDWData => {
 
 });
 
+const RDWAllData = RDWAllData[0].ParkingFacilities);
+
 // Get the data from the API endpoint
 async function getData(apiEndpoint) {
 
@@ -93,6 +95,8 @@ function getPaymentMethods(data) {
     return listPaymentMethods;
 
 }
+
+
 
 
 
