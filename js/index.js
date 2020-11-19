@@ -81,14 +81,12 @@ function getPaymentMethods(data) {
 
     const listPaymentMethods = data.map((value, index) => {
 
-        if(value == null){
+        if((value == null) || (value.paymentMethods.length === 0)){
             return null;
         }
 
-        console.log("PAYMENT: ", value.paymentMethods);
-        // console.log("Car charging spot: " + index + " - ", value.specifications[0].chargingPointCapacity);
-        // counter++;
-        // console.log("GOOD charging: ", counter);
+        counter++;
+        console.log("PAYMENT: ", value.paymentMethods + " - " + counter);
         return value;
     });
 
