@@ -17,6 +17,8 @@ getData(parkeerGaragesEndpoint).then(RDWData => {
     const listChargingCapacity = getCarChargingPoints(listCities);
     console.log('All charging capacity from cities', listChargingCapacity);
 
+    // console.log(RDWData[0].parkingFacilityInformation.paymentMethods);
+
 });
 
 // Get the data from the API endpoint
@@ -69,8 +71,29 @@ function getCarChargingPoints(data) {
     });
 
     return listchargingPoints;
-
     
 }
+
+function getPaymentMethods(data) {
+
+    let counter = 0;
+
+    const listPaymentMethods = data.map((value, index) => {
+
+        // if((value == null) || (value.specifications[0].chargingPointCapacity == null)){
+        //     return null;
+        // }
+        console.log("CHARGE: ", value.specifications);
+        // console.log("Car charging spot: " + index + " - ", value.specifications[0].chargingPointCapacity);
+        // counter++;
+        // console.log("GOOD charging: ", counter);
+        return value;
+    });
+
+    // return listPaymentMethods;
+
+}
+
+
 
 
