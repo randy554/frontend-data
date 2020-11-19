@@ -32,7 +32,7 @@ function getCities(data) {
 
     const listCities = data.map( (value, index) => {
 
-        if (typeof value.parkingFacilityInformation.accessPoints[0] == 'undefined'){
+        if ((typeof value.parkingFacilityInformation.accessPoints[0] == 'undefined') || (typeof value.parkingFacilityInformation.accessPoints[0].accessPointAddress == 'undefined')){
             return null;
         }
         console.log("alle data hier nog: " + index + " - " + value.parkingFacilityInformation.accessPoints[0].accessPointAddress.city);
