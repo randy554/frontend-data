@@ -32,13 +32,16 @@ function getCities(data) {
 
     const listCities = data.map( (value, index) => {
 
-        if ((typeof value.parkingFacilityInformation.accessPoints[0] == 'undefined') || (typeof value.parkingFacilityInformation.accessPoints[0].accessPointAddress == 'undefined')){
+        if ((typeof value.parkingFacilityInformation.accessPoints[0] == 'undefined') || (typeof value.parkingFacilityInformation.accessPoints[0].accessPointAddress == 'undefined') || (value.parkingFacilityInformation.accessPoints[0].accessPointAddress.city.length === 0)){
             return null;
         }
         // console.log("alle data hier nog: " + index + " - " + value.parkingFacilityInformation.accessPoints[0].accessPointAddress.city);
+        // console.log("TYPE: " + typeof value.parkingFacilityInformation.accessPoints[0].accessPointAddress.city);
         // return value.parkingFacilityInformation.accessPoints[0].accessPointAddress;
         return value.parkingFacilityInformation;
     });
 
     return listCities;
 }
+
+
