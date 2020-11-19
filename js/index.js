@@ -13,10 +13,11 @@ getData(parkeerGaragesEndpoint).then(RDWData => {
     // console.log("Car charging spot: ", RDWData[0].parkingFacilityInformation.specifications[0].chargingPointCapacity);
 
     const listCities = getCities(RDWData);
-    console.log('All available cities: ', listCities);
+    // console.log('All available cities: ', listCities);
     const listChargingCapacity = getCarChargingPoints(listCities);
-    console.log('All charging capacity from cities', listChargingCapacity);
-
+    // console.log('All charging capacity from cities: ', listChargingCapacity);
+    const listPaymentMethods = getPaymentMethods(listChargingCapacity);
+    console.log('All payments: ', listPaymentMethods);
     // console.log(RDWData[0].parkingFacilityInformation.paymentMethods);
 
 });
@@ -80,17 +81,18 @@ function getPaymentMethods(data) {
 
     const listPaymentMethods = data.map((value, index) => {
 
-        // if((value == null) || (value.specifications[0].chargingPointCapacity == null)){
-        //     return null;
-        // }
-        console.log("CHARGE: ", value.specifications);
+        if(value == null){
+            return null;
+        }
+
+        console.log("PAYMENT: ", value.paymentMethods);
         // console.log("Car charging spot: " + index + " - ", value.specifications[0].chargingPointCapacity);
         // counter++;
         // console.log("GOOD charging: ", counter);
         return value;
     });
 
-    // return listPaymentMethods;
+    return listPaymentMethods;
 
 }
 
