@@ -5,7 +5,7 @@ const parkeerGaragesEndpoint    = 'https://raw.githubusercontent.com/SharonV33/f
 // Perform API call
 getData(parkeerGaragesEndpoint).then(RDWData => {
 
-     console.log("MY RDW DATA: ", RDWData);
+     // console.log("MY RDW DATA: ", RDWData);
      // console.log("MY RDW DATA: ", RDWData[0]);
     // console.log("THIS IS IT: ", RDWData[0].parkingFacilityInformation.name);
     // console.log('City: ', RDWData[0].parkingFacilityInformation.accessPoints[0].accessPointAddress.city);
@@ -17,7 +17,7 @@ getData(parkeerGaragesEndpoint).then(RDWData => {
     const listChargingCapacity = getCarChargingPoints(listCities);
     // console.log('All charging capacity from cities: ', listChargingCapacity);
     const listPaymentMethods = getPaymentMethods(listChargingCapacity);
-    console.log('All payments: ', listPaymentMethods);
+    // console.log('All payments: ', listPaymentMethods);
     // console.log(RDWData[0].parkingFacilityInformation.paymentMethods);
 
 });
@@ -29,9 +29,16 @@ getAllRDWData(RDWAllData).then(allData => {
 });
 
 async function getAllRDWData(allRDWData) {
+    let counter = 0;
+    // console.log("kijken: ", allRDWData[0].identifier);
 
-    console.log("kijken: ", allRDWData[0].identifier);
+    const parkingPlaceIdentifiers = allRDWData.map(parking => {
+        counter++;
+        // console.log("kijken " + counter + ": ", parking.identifier);
+        return parking.identifier;
+    });
 
+    console.log("all id's: ", parkingPlaceIdentifiers);
 }
 
 // Get the data from the API endpoint
