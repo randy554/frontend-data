@@ -22,7 +22,17 @@ getData(parkeerGaragesEndpoint).then(RDWData => {
 
 });
 
-const RDWAllData = RDWAllData[0].ParkingFacilities);
+const RDWAllData = NPRORDWAllData[0].ParkingFacilities;
+
+getAllRDWData(RDWAllData).then(allData => {
+
+});
+
+async function getAllRDWData(allRDWData) {
+
+    console.log("kijken: ", allRDWData[0].identifier);
+
+}
 
 // Get the data from the API endpoint
 async function getData(apiEndpoint) {
@@ -49,8 +59,8 @@ function getCities(data) {
         // console.log("alle data hier nog: " + index + " - " + value.parkingFacilityInformation.accessPoints[0].accessPointAddress.city);
         // console.log("TYPE: " + typeof value.parkingFacilityInformation.accessPoints[0].accessPointAddress.city);
         // return value.parkingFacilityInformation.accessPoints[0].accessPointAddress;
-        counter++;
-        console.log("GOOD cities: ", counter);
+        // counter++;
+        // console.log("GOOD cities: ", counter);
         return value.parkingFacilityInformation;
     });
 
@@ -68,8 +78,8 @@ function getCarChargingPoints(data) {
         }
         // console.log("CHARGE: ", value.specifications);
         // console.log("Car charging spot: " + index + " - ", value.specifications[0].chargingPointCapacity);
-        counter++;
-        console.log("GOOD charging: ", counter);
+        // counter++;
+        // console.log("GOOD charging: ", counter);
         return value;
     });
 
@@ -87,8 +97,8 @@ function getPaymentMethods(data) {
             return null;
         }
 
-        counter++;
-        console.log("PAYMENT: ", value.paymentMethods + " - " + counter);
+        // counter++;
+        // console.log("PAYMENT: ", value.paymentMethods + " - " + counter);
         return value;
     });
 
