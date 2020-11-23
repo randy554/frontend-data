@@ -1,5 +1,6 @@
 // Set API endpoint
-// const parkeerGaragesEndpoint    = `https://npropendata.rdw.nl/parkingdata/v2/`;
+const RDWApiUrl = 'https://npropendata.rdw.nl/parkingdata/v2/';
+const proxyUrl  = 'https://cors-anywhere.herokuapp.com/';
 const parkeerGaragesEndpoint    = 'https://raw.githubusercontent.com/SharonV33/frontend-data/main/data/parkeergarages_1000.json';
 
 // Perform API call
@@ -20,13 +21,15 @@ getData(parkeerGaragesEndpoint).then(RDWData => {
     // console.log('All payments: ', listPaymentMethods);
     // console.log(RDWData[0].parkingFacilityInformation.paymentMethods);
 
+
 });
 
-const RDWAllData = NPRORDWAllData[0].ParkingFacilities;
+const RDWAllData = NPRORDWAllData[0].ParkingFacilities.slice(100, 10);
 
 getAllRDWData(RDWAllData).then(allData => {
-
+    console.log("Einde: ", allData);
 });
+
 
 async function getAllRDWData(allRDWData) {
     let counter = 0;
@@ -39,6 +42,28 @@ async function getAllRDWData(allRDWData) {
     });
 
     console.log("all id's: ", parkingPlaceIdentifiers);
+
+    // set baseUrl
+    const baseUrl = proxyUrl + RDWApiUrl + 'static/';
+
+    // get all parkingfacilities data
+    const allParkingFacilitiesData = parkingPlaceIdentifiers.map(identifier => getData(baseUrl + identifier));
+    console.log("AllparFacilitiesData: ", allParkingFacilitiesData);
+    const facilitiesDataArray = await Promise.all(allParkingFacilitiesData);
+    console.log("facilitiesDataArray: ",  facilitiesDataArray);
+
+    const listFacilitiesData = facilitiesDataArray.map((item, index) => {
+
+        // if(index > 4){
+        //     return
+
+        // }
+        console.log("Gelukt: " + index + " - " + item.parkingFacilityInformation.accessPoints);
+    });
+
+    return listFacilitiesData;
+
+
 }
 
 // Get the data from the API endpoint
@@ -46,13 +71,20 @@ async function getData(apiEndpoint) {
 
     // Perform a call to the API, this will be paused until completion
     const response = await fetch(apiEndpoint);
-    console.log("Response: ", response);
+    // console.log("Response: ", response);
 
     // Wait for the JSON response
     const data = await response.json();
+    console.log("GETTTData: ", data);
 
     return data;
 }
+
+// async function getParkingFacilitiesData() {
+//
+//         const response = await fetch(apiEndpoint);
+//         console.log("Response: ", response);
+// }
 
 function getCities(data) {
 
