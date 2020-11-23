@@ -26,7 +26,7 @@ const parkeerGaragesEndpoint    = 'https://raw.githubusercontent.com/SharonV33/f
 
 const RDWAllData = NPRORDWAllData[0].ParkingFacilities;
 
-launchData();
+// launchData();
 
 async function launchData() {
 
@@ -88,7 +88,7 @@ async function getData(apiEndpoint) {
 
     // Wait for the JSON response
     const data = await response.json();
-    // console.log("GETTTData: ", data);
+    console.log("Data: ", data);
 
     return data;
 }
