@@ -42,9 +42,6 @@ async function launchData() {
 
 }
 
-// getAllRDWData(RDWAllData).then(allData => {
-//     console.log("Einde: ", allData);
-// });
 
 async function configureParkingIntroData(allParkingIntroData) {
 
@@ -96,11 +93,6 @@ async function getData(apiEndpoint) {
     return data;
 }
 
-// async function getParkingFacilitiesData() {
-//
-//         const response = await fetch(apiEndpoint);
-//         console.log("Response: ", response);
-// }
 
 function getCities(data) {
 
