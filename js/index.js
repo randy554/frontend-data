@@ -14,11 +14,13 @@ getData(CBSPopulationAPI).then( cbsData => {
     // const test = setPropertyTypeToNumber(cbsData, "Perioden");
     // console.log("TEST: ", test);
 
-    // console.log(cbsData);
+    console.log("CBS data: ", cbsData);
 
     // const test2 = filterCBSDataByYear(cbsData, '2015');
     const test3 = removeGemeenteFromRegio(cbsData, "(gemeente)");
     console.log("TEST3: ", test3);
+    const test4 = removeWhitespaceFromRegio(test3);
+    console.log("TEST4: ", test4);
 
 });
 
@@ -53,7 +55,15 @@ function removeGemeenteFromRegio (data, keyword) {
     });
 }
 
+function removeWhitespaceFromRegio (data) {
 
+    return data.map(value => {
+
+        value["Regio's"] = value["Regio's"].trim();
+        return value;
+
+    });
+}
 
 
 
