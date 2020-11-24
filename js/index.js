@@ -5,15 +5,42 @@ const CBSPopulationAPI  = 'https://raw.githubusercontent.com/randy554/myAPI/main
 
 getData(CBSPopulationAPI).then( cbsData => {
 
-    console.log("CBS data: ",cbsData[0].aantal);
+    // console.log("CBS data: ",cbsData[0].aantal);
+    //
+    // cbsData.map(value => {
+    //     console.log("CBS waarde: ", value.Perioden + " Datatype: " + getValueType(value.Perioden));
+    // });
+
+    // const test = setPropertyTypeToNumber(cbsData, "Perioden");
+    // console.log("TEST: ", test);
+
+    // console.log(cbsData);
+
+    // const test2 = filterCBSDataByYear(cbsData, '2015');
+    const test3 = removeGemeenteFromRegio(cbsData, "(gemeente)");
+    console.log("TEST3: ", test3);
 
 });
 
-getData(RDWParkingAPI).then( rdwData => {
+// getData(RDWParkingAPI).then( rdwData => {
+//
+//     console.log("RDW data: ",rdwData[0].city);
+//
+// });
 
-    console.log("RDW data: ",rdwData[0].city);
+function filterCBSDataByYear(data, year) {
 
-});
+    return data.filter(value => {
+
+        if (value.Perioden == year){
+            return value;
+        }
+
+    });
+}
+
+
+
 
 
 
