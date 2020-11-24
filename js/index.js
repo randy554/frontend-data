@@ -39,6 +39,20 @@ function filterCBSDataByYear(data, year) {
     });
 }
 
+function removeGemeenteFromRegio (data, keyword) {
+
+    return data.map(value => {
+
+        if ((value["Regio's"].indexOf(keyword)) > 0){
+            value["Regio's"] = value["Regio's"].replace(keyword, '');
+            return value;
+        }else {
+            return value;
+        }
+
+    });
+}
+
 
 
 
