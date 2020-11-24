@@ -21,6 +21,8 @@ getData(CBSPopulationAPI).then( cbsData => {
     console.log("TEST3: ", test3);
     const test4 = removeWhitespaceFromRegio(test3);
     console.log("TEST4: ", test4);
+    const test5 = changeRegioValue(test4, "'s-Gravenhage", "Den Haag");
+    console.log("TEST5: ", test5);
 
 });
 
@@ -62,6 +64,18 @@ function removeWhitespaceFromRegio (data) {
         value["Regio's"] = value["Regio's"].trim();
         return value;
 
+    });
+}
+
+function changeRegioValue(data, currentRegioValue, newRegioValue) {
+
+    return data.map(value => {
+
+        if (value["Regio's"] === currentRegioValue){
+            value["Regio's"] = newRegioValue;
+        }
+        console.log("iets: ", typeof value["Regio's"]);
+        return value;
     });
 }
 
