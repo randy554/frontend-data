@@ -29,7 +29,17 @@ const CBSPopulationAPI  = 'https://raw.githubusercontent.com/randy554/myAPI/main
 getData(RDWParkingAPI).then( rdwData => {
 
     // console.log("RDW data: ",rdwData[2].city);
-    console.log("Lijst zonder null steden: ",removeNullValuesFromCity(rdwData));
+    const removeEmptyCities = removeNullValuesFromCity(rdwData);
+    console.log("List without null cities: ",removeEmptyCities);
+
+    const amsterdamList = filterByCity(removeEmptyCities, "Amsterdam");
+    const rotterdamList = filterByCity(removeEmptyCities, "Rotterdam");
+    const denHaagList = filterByCity(removeEmptyCities, "Den Haag");
+    const utrechtList = filterByCity(removeEmptyCities, "Utrecht");
+    console.log("City: ", amsterdamList);
+    console.log("City: ", rotterdamList);
+    console.log("City: ", denHaagList);
+    console.log("City: ", utrechtList);
 });
 
 function filterCBSDataByYear(data, year) {
@@ -89,6 +99,19 @@ function removeNullValuesFromCity(data) {
 
     });
 }
+
+function filterByCity(data, city) {
+
+    return data.filter(value => {
+
+        if (value.city == city){
+            return value;
+        }
+
+    });
+}
+
+
 
 
 
