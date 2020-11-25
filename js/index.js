@@ -3,34 +3,34 @@ const RDWParkingAPI     = 'https://raw.githubusercontent.com/randy554/myAPI/main
 const CBSPopulationAPI  = 'https://raw.githubusercontent.com/randy554/myAPI/main/cbsBevolkingRandstad.json';
 
 
-getData(CBSPopulationAPI).then( cbsData => {
-
-    // console.log("CBS data: ",cbsData[0].aantal);
-    //
-    // cbsData.map(value => {
-    //     console.log("CBS waarde: ", value.Perioden + " Datatype: " + getValueType(value.Perioden));
-    // });
-
-    // const test = setPropertyTypeToNumber(cbsData, "Perioden");
-    // console.log("TEST: ", test);
-
-    console.log("CBS data: ", cbsData);
-
-    // const test2 = filterCBSDataByYear(cbsData, '2015');
-    const test3 = removeGemeenteFromRegio(cbsData, "(gemeente)");
-    console.log("TEST3: ", test3);
-    const test4 = removeWhitespaceFromRegio(test3);
-    console.log("TEST4: ", test4);
-    const test5 = changeRegioValue(test4, "'s-Gravenhage", "Den Haag");
-    console.log("TEST5: ", test5);
-
-});
-
-// getData(RDWParkingAPI).then( rdwData => {
+// getData(CBSPopulationAPI).then( cbsData => {
 //
-//     console.log("RDW data: ",rdwData[0].city);
+//     // console.log("CBS data: ",cbsData[0].aantal);
+//     //
+//     // cbsData.map(value => {
+//     //     console.log("CBS waarde: ", value.Perioden + " Datatype: " + getValueType(value.Perioden));
+//     // });
+//
+//     // const test = setPropertyTypeToNumber(cbsData, "Perioden");
+//     // console.log("TEST: ", test);
+//
+//     console.log("CBS data: ", cbsData);
+//
+//     // const test2 = filterCBSDataByYear(cbsData, '2015');
+//     const test3 = removeGemeenteFromRegio(cbsData, "(gemeente)");
+//     console.log("TEST3: ", test3);
+//     const test4 = removeWhitespaceFromRegio(test3);
+//     console.log("TEST4: ", test4);
+//     const test5 = changeRegioValue(test4, "'s-Gravenhage", "Den Haag");
+//     console.log("TEST5: ", test5);
 //
 // });
+
+getData(RDWParkingAPI).then( rdwData => {
+
+    // console.log("RDW data: ",rdwData[2].city);
+    console.log("Lijst zonder null steden: ",removeNullValuesFromCity(rdwData));
+});
 
 function filterCBSDataByYear(data, year) {
 
@@ -74,13 +74,21 @@ function changeRegioValue(data, currentRegioValue, newRegioValue) {
         if (value["Regio's"] === currentRegioValue){
             value["Regio's"] = newRegioValue;
         }
-        console.log("iets: ", typeof value["Regio's"]);
         return value;
     });
 }
 
 
+function removeNullValuesFromCity(data) {
 
+    return data.filter(value => {
+
+        if (value.city != null){
+            return value;
+        }
+
+    });
+}
 
 
 
