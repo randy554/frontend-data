@@ -32,14 +32,17 @@ getData(RDWParkingAPI).then( rdwData => {
     const removeEmptyCities = removeNullValuesFromCity(rdwData);
     console.log("List without null cities: ",removeEmptyCities);
 
-    const amsterdamList = filterByCity(removeEmptyCities, "Amsterdam");
-    const rotterdamList = filterByCity(removeEmptyCities, "Rotterdam");
-    const denHaagList = filterByCity(removeEmptyCities, "Den Haag");
+    // const amsterdamList = filterByCity(removeEmptyCities, "Amsterdam");
+    // const rotterdamList = filterByCity(removeEmptyCities, "Rotterdam");
+    // const denHaagList = filterByCity(removeEmptyCities, "Den Haag");
     const utrechtList = filterByCity(removeEmptyCities, "Utrecht");
-    console.log("City: ", amsterdamList);
-    console.log("City: ", rotterdamList);
-    console.log("City: ", denHaagList);
+    // console.log("City: ", amsterdamList);
+    // console.log("City: ", rotterdamList);
+    // console.log("City: ", denHaagList);
     console.log("City: ", utrechtList);
+    const totalChargingPoints = totalAmountChargingPoints(utrechtList);
+    console.log("Total amount of charging points: ", totalChargingPoints.totalChargingPoints + " total amount of cities: " + totalChargingPoints.amountOfCities);
+
 });
 
 function filterCBSDataByYear(data, year) {
@@ -111,7 +114,22 @@ function filterByCity(data, city) {
     });
 }
 
+function totalAmountChargingPoints(data) {
 
+    let charginPointstats = {amountOfCities: 0, totalChargingPoints: 0};
+
+    data.map(value => {
+
+        if (value.chargingPoint > 0){
+            charginPointstats.totalChargingPoints += value.chargingPoint;
+        }
+
+        charginPointstats.amountOfCities++;
+
+    });
+
+    return charginPointstats;
+}
 
 
 
