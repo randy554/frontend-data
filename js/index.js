@@ -118,7 +118,8 @@ function totalAmountChargingPoints(data) {
 
     let charginPointstats = {amountOfCities: 0, totalChargingPoints: 0};
 
-    data.map(value => {
+
+    data.forEach(value => {
 
         if (value.chargingPoint > 0){
             charginPointstats.totalChargingPoints += value.chargingPoint;
