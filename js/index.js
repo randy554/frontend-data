@@ -42,6 +42,12 @@ getData(RDWParkingAPI).then( rdwData => {
     console.log("City: ", utrechtList);
     const totalChargingPoints = totalAmountChargingPoints(utrechtList);
     console.log("Total amount of charging points: ", totalChargingPoints.totalChargingPoints + " total amount of cities: " + totalChargingPoints.amountOfCities);
+    console.log("Type of: ", utrechtList[6].payment[0].method);
+    const allPaymethods = getAllPaymentMethods(utrechtList);
+    console.log("PAYMENT METHODS: ", allPaymethods);
+    console.log("PAYMETHODS COUNT: ", getPaymentMethodCount(allPaymethods, "AMEX"));
+
+
 
 });
 
@@ -130,6 +136,43 @@ function totalAmountChargingPoints(data) {
     });
 
     return charginPointstats;
+}
+
+
+function getAllPaymentMethods(data) {
+
+    let paymentMethods = [];
+
+    data.forEach(value => {
+
+        if (value.payment != null){
+
+            value.payment.forEach(pay =>{
+
+               paymentMethods.push(pay.method);
+
+            });
+        }
+
+    });
+
+    return paymentMethods;
+    
+}
+
+function getPaymentMethodCount(data, paymentmethod) {
+
+    let payMethodstats = {payMethod: paymentmethod, totalCount: 0};
+
+    data.forEach(value => {
+
+        if (value == paymentmethod){
+            payMethodstats.totalCount++;
+        }
+
+    });
+
+    return payMethodstats;
 }
 
 
