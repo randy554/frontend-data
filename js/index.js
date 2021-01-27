@@ -20,9 +20,11 @@ getData(CBSPopulationAPI).then( cbsData => {
     // const test3 = removeGemeenteFromRegio(cbsData, "(gemeente)");
     const test3 = removeWordFromFieldValue(cbsData, "Regio's" ,"(gemeente)");
     console.log("TEST3: ", test3);
-    const test4 = removeWhitespaceFromRegio(test3);
+    // const test4 = removeWhitespaceFromRegio(test3);
+    const test4 = removeWhitespaceFromFieldValue(test3, "Regio's");
     console.log("TEST4: ", test4);
-    const test5 = changeRegioValue(test4, "'s-Gravenhage", "Den Haag");
+    // const test5 = replaceRegioValue(test4, "'s-Gravenhage", "Den Haag");
+    const test5 = replaceFieldValue(test4, "Regio's", "'s-Gravenhage", "Den Haag");
     console.log("TEST5: ", test5);
 
 });
@@ -61,7 +63,7 @@ function filterCBSDataByYear(data, year) {
     });
 }
 
-// Remove word from field value
+// Remove word from regio value
 function removeGemeenteFromRegio (data, keyword) {
 
     return data.map(value => {
@@ -90,7 +92,7 @@ function removeWordFromFieldValue (data, field, keyword) {
 
     });
 }
-
+// Remove whitespace from regio value
 function removeWhitespaceFromRegio (data) {
 
     return data.map(value => {
@@ -100,13 +102,36 @@ function removeWhitespaceFromRegio (data) {
 
     });
 }
+// Remove whitespace from field value
+function removeWhitespaceFromFieldValue (data, field) {
 
-function changeRegioValue(data, currentRegioValue, newRegioValue) {
+    return data.map(value => {
+
+        value[field] = value[field].trim();
+        return value;
+
+    });
+}
+
+// Replace regio value
+function replaceRegioValue(data, currentRegioValue, newRegioValue) {
 
     return data.map(value => {
 
         if (value["Regio's"] === currentRegioValue){
             value["Regio's"] = newRegioValue;
+        }
+        return value;
+    });
+}
+
+// Replace field value
+function replaceFieldValue(data, field, currentRegioValue, newRegioValue) {
+
+    return data.map(value => {
+
+        if (value[field] === currentRegioValue){
+            value[field] = newRegioValue;
         }
         return value;
     });
