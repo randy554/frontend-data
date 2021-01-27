@@ -28,7 +28,6 @@ const CBSPopulationAPI  = 'https://raw.githubusercontent.com/randy554/myAPI/main
 
 getData(RDWParkingAPI).then( rdwData => {
 
-    // console.log("RDW data: ",rdwData[2].city);
     const removeEmptyCities = removeNullValuesFromCity(rdwData);
     console.log("List without null cities: ",removeEmptyCities);
 
@@ -36,17 +35,15 @@ getData(RDWParkingAPI).then( rdwData => {
     // const rotterdamList = filterByCity(removeEmptyCities, "Rotterdam");
     // const denHaagList = filterByCity(removeEmptyCities, "Den Haag");
     const utrechtList = filterByCity(removeEmptyCities, "Utrecht");
-    // console.log("City: ", amsterdamList);
-    // console.log("City: ", rotterdamList);
-    // console.log("City: ", denHaagList);
     console.log("City: ", utrechtList);
     const totalChargingPoints = totalAmountChargingPoints(utrechtList);
     console.log("Total amount of charging points: ", totalChargingPoints.totalChargingPoints + " total amount of cities: " + totalChargingPoints.amountOfCities);
-    console.log("Type of: ", utrechtList[6].payment[0].method);
     const allPaymethods = getAllPaymentMethods(utrechtList);
     console.log("PAYMENT METHODS: ", allPaymethods);
     console.log("PAYMETHODS COUNT: ", getPaymentMethodCount(allPaymethods, "AMEX"));
 
+    const allpaymethods = getAllPaymentMethodCount(allPaymethods);
+    console.log("ALL PAYMETHODS COUNT: ", allpaymethods);
 
 
 });
@@ -97,7 +94,7 @@ function changeRegioValue(data, currentRegioValue, newRegioValue) {
     });
 }
 
-
+// remove cities with null value from the list
 function removeNullValuesFromCity(data) {
 
     return data.filter(value => {
@@ -109,6 +106,7 @@ function removeNullValuesFromCity(data) {
     });
 }
 
+// Select data per city
 function filterByCity(data, city) {
 
     return data.filter(value => {
@@ -120,6 +118,7 @@ function filterByCity(data, city) {
     });
 }
 
+// Calculate the amount of charging points per city
 function totalAmountChargingPoints(data) {
 
     let charginPointstats = {amountOfCities: 0, totalChargingPoints: 0};
@@ -138,7 +137,7 @@ function totalAmountChargingPoints(data) {
     return charginPointstats;
 }
 
-
+// Get a list of al the payment methods
 function getAllPaymentMethods(data) {
 
     let paymentMethods = [];
@@ -160,6 +159,7 @@ function getAllPaymentMethods(data) {
     
 }
 
+// Get the occurrence amount of a payment method
 function getPaymentMethodCount(data, paymentmethod) {
 
     let payMethodstats = {payMethod: paymentmethod, totalCount: 0};
@@ -175,15 +175,22 @@ function getPaymentMethodCount(data, paymentmethod) {
     return payMethodstats;
 }
 
+//Get the occurrence amount of a all payment methods
+function getAllPaymentMethodCount(data) {
 
+    return data.reduce((newList, payMethod) => {
 
+        if(newList.hasOwnProperty(payMethod)){
+            newList[payMethod]++;
+        }else{
+            newList[payMethod] = 1;
+        }
 
+        return newList;
 
+    }, {});
 
-
-
-
-
+}
 
 
 

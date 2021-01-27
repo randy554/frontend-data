@@ -24,7 +24,7 @@ const parkeerGaragesEndpoint    = 'https://raw.githubusercontent.com/SharonV33/f
 //
 // });
 
-const RDWAllData = NPRORDWAllData[0].ParkingFacilities;
+// const RDWAllData = NPRORDWAllData[0].ParkingFacilities;
 
 // launchData();
 
@@ -93,7 +93,7 @@ async function getData(apiEndpoint) {
     return data;
 }
 
-
+//Replace undefined city endpoints with null or return city data
 function getCities(data) {
 
     console.log("In cities: ", data.parkingFacilityInformation.accessPoints);
@@ -107,6 +107,7 @@ function getCities(data) {
 
 }
 
+//Replace undefined car charging endpoints with null or return car charging data
 function getCarChargingPoints(data) {
 
     console.log("In charging: ", data.parkingFacilityInformation.specifications);
@@ -119,6 +120,7 @@ function getCarChargingPoints(data) {
 
 }
 
+//Replace undefined payment endpoints with null or return payment data
 function getPaymentMethods(data) {
 
     console.log("In payment: ", data.parkingFacilityInformation.paymentMethods);
