@@ -16,27 +16,22 @@ getData(CBSPopulationAPI).then( cbsData => {
     console.log('Filter by year:', test6);
 });
 
-// getData(RDWParkingAPI).then( rdwData => {
-//
-//     const removeEmptyCities = removeNullValuesFromCity(rdwData);
-//     console.log("List without null cities: ",removeEmptyCities);
-//
-//     // const amsterdamList = filterByCity(removeEmptyCities, "Amsterdam");
-//     // const rotterdamList = filterByCity(removeEmptyCities, "Rotterdam");
-//     // const denHaagList = filterByCity(removeEmptyCities, "Den Haag");
-//     const utrechtList = filterByCity(removeEmptyCities, "Utrecht");
-//     console.log("City: ", utrechtList);
-//     const totalChargingPoints = totalAmountChargingPoints(utrechtList);
-//     console.log("Total amount of charging points: ", totalChargingPoints.totalChargingPoints + " total amount of cities: " + totalChargingPoints.amountOfCities);
-//     const allPaymethods = getAllPaymentMethods(utrechtList);
-//     console.log("PAYMENT METHODS: ", allPaymethods);
-//     console.log("PAYMETHODS COUNT: ", getPaymentMethodCount(allPaymethods, "AMEX"));
-//
-//     const allpaymethods = getAllPaymentMethodCount(allPaymethods);
-//     console.log("ALL PAYMETHODS COUNT: ", allpaymethods);
-//
-//
-// });
+getData(RDWParkingAPI).then( rdwData => {
+
+    const removeEmptyCities = removeNullValuesFromCity(rdwData);
+    console.log("List without null cities: ",removeEmptyCities);
+    const utrechtList = filterByCity(removeEmptyCities, "Utrecht");
+    console.log("City: ", utrechtList);
+    const totalChargingPoints = totalAmountChargingPoints(utrechtList);
+    console.log("Total amount of charging points: ", totalChargingPoints.totalChargingPoints + " total amount of cities: " + totalChargingPoints.amountOfCities);
+    const allPaymethods = getAllPaymentMethods(utrechtList);
+    console.log("PAYMENT METHODS: ", allPaymethods);
+    console.log("PAYMETHODS COUNT: ", getPaymentMethodCount(allPaymethods, "AMEX"));
+    const allpaymethods = getAllPaymentMethodCount(allPaymethods);
+    console.log("ALL PAYMETHODS COUNT: ", allpaymethods);
+
+
+});
 
 // Return data from a certain year
 function filterCBSDataByYear(data, year) {
