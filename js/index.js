@@ -5,28 +5,15 @@ const CBSPopulationAPI  = 'https://raw.githubusercontent.com/randy554/myAPI/main
 
 getData(CBSPopulationAPI).then( cbsData => {
 
-    // console.log("CBS data: ",cbsData[0].aantal);
-    //
-    // cbsData.map(value => {
-    //     console.log("CBS waarde: ", value.Perioden + " Datatype: " + getValueType(value.Perioden));
-    // });
-
-    // const test = setPropertyTypeToNumber(cbsData, "Perioden");
-    // console.log("TEST: ", test);
-
     console.log("CBS data: ", cbsData);
-
-    // const test2 = filterCBSDataByYear(cbsData, '2015');
-    // const test3 = removeGemeenteFromRegio(cbsData, "(gemeente)");
     const test3 = removeWordFromFieldValue(cbsData, "Regio's" ,"(gemeente)");
     console.log("TEST3: ", test3);
-    // const test4 = removeWhitespaceFromRegio(test3);
     const test4 = removeWhitespaceFromFieldValue(test3, "Regio's");
     console.log("TEST4: ", test4);
-    // const test5 = replaceRegioValue(test4, "'s-Gravenhage", "Den Haag");
     const test5 = replaceFieldValue(test4, "Regio's", "'s-Gravenhage", "Den Haag");
     console.log("TEST5: ", test5);
-
+    const test6 = filterCBSDataByYear(test5, '2020');
+    console.log('Filter by year:', test6);
 });
 
 // getData(RDWParkingAPI).then( rdwData => {
@@ -92,6 +79,7 @@ function removeWordFromFieldValue (data, field, keyword) {
 
     });
 }
+
 // Remove whitespace from regio value
 function removeWhitespaceFromRegio (data) {
 
@@ -102,6 +90,7 @@ function removeWhitespaceFromRegio (data) {
 
     });
 }
+
 // Remove whitespace from field value
 function removeWhitespaceFromFieldValue (data, field) {
 
