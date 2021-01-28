@@ -3,41 +3,48 @@ const RDWParkingAPI     = 'https://raw.githubusercontent.com/randy554/myAPI/main
 const CBSPopulationAPI  = 'https://raw.githubusercontent.com/randy554/myAPI/main/cbsBevolkingRandstad.json';
 
 
-// getData(CBSPopulationAPI).then( cbsData => {
-//
-//     console.log("CBS data: ", cbsData);
-//     const test3 = removeWordFromFieldValue(cbsData, "Regio's" ,"(gemeente)");
-//     console.log("TEST3: ", test3);
-//     const test4 = removeWhitespaceFromFieldValue(test3, "Regio's");
-//     console.log("TEST4: ", test4);
-//     const test5 = replaceFieldValue(test4, "Regio's", "'s-Gravenhage", "Den Haag");
-//     console.log("TEST5: ", test5);
-//     const test6 = filterCBSDataByYear(test5, '2020');
-//     console.log('Filter by year:', test6);
-// });
-//
+getData(CBSPopulationAPI).then( cbsData => {
 
-getData(RDWParkingAPI).then( rdwData => {
+    // Remove a word from a field value
+    const removedWordGemeenteFromRegioField = removeWordFromFieldValue(cbsData, "Regio's" ,"(gemeente)");
+    console.log("Remove (gemeente) in Regio field: ", removedWordGemeenteFromRegioField);
 
-    // Remove all null values from city field
-    const removeEmptyCities = removeNullValues(rdwData, "city");
+    // Remove whitespace from field
+    const removeWhitespaceFromRegioField = removeWhitespaceFromFieldValue(removedWordGemeenteFromRegioField, "Regio's");
+    console.log("Remove whitespace in Regio field: ", removeWhitespaceFromRegioField);
 
-    // Select data per city
-    const listPerCity = filterByField(removeEmptyCities, "city", "Utrecht");
+    // Replace a field value with another value
+    const renameCityField = replaceFieldValue(removeWhitespaceFromRegioField, "Regio's", "'s-Gravenhage", "Den Haag");
+    console.log("Rename city : ", renameCityField);
 
-    // List charging point statistics per city
-    const listChargingPointsStatsPerCity = getChargingPointsStats(listPerCity);
-
-    // List all different payment methods per city
-    const listPaymethodsPerCity = getAllPaymentMethods(listPerCity);
-
-    // Give totals of payment methods per city
-    const listCountPerPaymethodsPerCity = getAllPaymentMethodCount(listPaymethodsPerCity);
-
-    // Give the total amount of a payment method
-    const listCountPaymethodPerCity = getPaymentMethodCount(listPaymethodsPerCity, "AMEX");
+    // Get cities data per year
+    const getCityDataByYear = filterCBSDataByYear(renameCityField, '2020');
+    console.log('Filter by year:', getCityDataByYear);
 
 });
+
+
+// getData(RDWParkingAPI).then( rdwData => {
+//
+//     // Remove all null values from city field
+//     const removeEmptyCities = removeNullValues(rdwData, "city");
+//
+//     // Select data per city
+//     const listPerCity = filterByField(removeEmptyCities, "city", "Utrecht");
+//
+//     // List charging point statistics per city
+//     const listChargingPointsStatsPerCity = getChargingPointsStats(listPerCity);
+//
+//     // List all different payment methods per city
+//     const listPaymethodsPerCity = getAllPaymentMethods(listPerCity);
+//
+//     // Give totals of payment methods per city
+//     const listCountPerPaymethodsPerCity = getAllPaymentMethodCount(listPaymethodsPerCity);
+//
+//     // Give the total amount of a payment method
+//     const listCountPaymethodPerCity = getPaymentMethodCount(listPaymethodsPerCity, "AMEX");
+//
+// });
 
 // Return data from a certain year
 function filterCBSDataByYear(data, year) {
@@ -127,35 +134,13 @@ function replaceFieldValue(data, field, currentRegioValue, newRegioValue) {
     });
 }
 
-// Remove cities with null value from the list
-function removeNullValuesFromCity(data) {
 
-    return data.filter(value => {
-
-        if (value.city != null){
-            return value;
-        }
-
-    });
-}
-
+// Remove null value from field
 function removeNullValues(data, field) {
 
     return data.filter(value => {
 
         if (value[field] != null){
-            return value;
-        }
-
-    });
-}
-
-// Select data per city
-function filterByCity(data, city) {
-
-    return data.filter(value => {
-
-        if (value.city == city){
             return value;
         }
 

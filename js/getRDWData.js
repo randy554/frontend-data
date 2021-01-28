@@ -4,7 +4,7 @@ const proxyUrl  = 'https://cors-anywhere.herokuapp.com/';
 const allParkingIntroDataLocal = NPRORDWAllData[0].ParkingFacilities;
 
 launchData(allParkingIntroDataLocal).then(allParkdata => {
-    console.log("Complete parking data: ", allParkdata);
+    // console.log("Complete parking data: ", allParkdata);
 });
 
 async function launchData(parkingDataEndpoint) {
