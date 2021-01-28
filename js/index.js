@@ -19,18 +19,23 @@ const CBSPopulationAPI  = 'https://raw.githubusercontent.com/randy554/myAPI/main
 
 getData(RDWParkingAPI).then( rdwData => {
 
-    const removeEmptyCities = removeNullValuesFromCity(rdwData);
-    console.log("List without null cities: ",removeEmptyCities);
-    const utrechtList = filterByCity(removeEmptyCities, "Utrecht");
-    console.log("City: ", utrechtList);
-    const totalChargingPoints = totalAmountChargingPoints(utrechtList);
-    console.log("Total amount of charging points: ", totalChargingPoints.totalChargingPoints + " total amount of cities: " + totalChargingPoints.amountOfCities);
-    const allPaymethods = getAllPaymentMethods(utrechtList);
-    console.log("PAYMENT METHODS: ", allPaymethods);
-    console.log("PAYMETHODS COUNT: ", getPaymentMethodCount(allPaymethods, "AMEX"));
-    const allpaymethods = getAllPaymentMethodCount(allPaymethods);
-    console.log("ALL PAYMETHODS COUNT: ", allpaymethods);
+    // Remove all null values from city field
+    const removeEmptyCities = removeNullValues(rdwData, "city");
 
+    // Select data per city
+    const listPerCity = filterByField(removeEmptyCities, "city", "Utrecht");
+
+    // List charging point statistics per city
+    const listChargingPointsStatsPerCity = getChargingPointsStats(listPerCity);
+
+    // List all different payment methods per city
+    const listPaymethodsPerCity = getAllPaymentMethods(listPerCity);
+
+    // Give totals of payment methods per city
+    const listCountPerPaymethodsPerCity = getAllPaymentMethodCount(listPaymethodsPerCity);
+
+    // Give the total amount of a payment method
+    const listCountPaymethodPerCity = getPaymentMethodCount(listPaymethodsPerCity, "AMEX");
 
 });
 
@@ -134,6 +139,17 @@ function removeNullValuesFromCity(data) {
     });
 }
 
+function removeNullValues(data, field) {
+
+    return data.filter(value => {
+
+        if (value[field] != null){
+            return value;
+        }
+
+    });
+}
+
 // Select data per city
 function filterByCity(data, city) {
 
@@ -146,8 +162,20 @@ function filterByCity(data, city) {
     });
 }
 
+// Select data by field
+function filterByField(data, field, keyword) {
+
+    return data.filter(value => {
+
+        if (value[field] == keyword){
+            return value;
+        }
+
+    });
+}
+
 // Calculate the amount of charging points per city
-function totalAmountChargingPoints(data) {
+function getChargingPointsStats(data) {
 
     let charginPointstats = {amountOfCities: 0, totalChargingPoints: 0};
 
