@@ -1,78 +1,48 @@
 // Set API endpoints
 const RDWApiUrl = 'https://npropendata.rdw.nl/parkingdata/v2/';
 const proxyUrl  = 'https://cors-anywhere.herokuapp.com/';
-const parkeerGaragesEndpoint    = 'https://raw.githubusercontent.com/SharonV33/frontend-data/main/data/parkeergarages_1000.json';
+const allParkingIntroDataLocal = NPRORDWAllData[0].ParkingFacilities;
 
-// Perform API call
-// getData(parkeerGaragesEndpoint).then(RDWData => {
-//
-//      // console.log("MY RDW DATA: ", RDWData);
-//      // console.log("MY RDW DATA: ", RDWData[0]);
-//     // console.log("THIS IS IT: ", RDWData[0].parkingFacilityInformation.name);
-//     // console.log('City: ', RDWData[0].parkingFacilityInformation.accessPoints[0].accessPointAddress.city);
-//
-//     // console.log("Car charging spot: ", RDWData[0].parkingFacilityInformation.specifications[0].chargingPointCapacity);
-//
-//     const listCities = getCities(RDWData);
-//     // console.log('All available cities: ', listCities);
-//     const listChargingCapacity = getCarChargingPoints(listCities);
-//     // console.log('All charging capacity from cities: ', listChargingCapacity);
-//     const listPaymentMethods = getPaymentMethods(listChargingCapacity);
-//     // console.log('All payments: ', listPaymentMethods);
-//     // console.log(RDWData[0].parkingFacilityInformation.paymentMethods);
-//
-//
-// });
+launchData(allParkingIntroDataLocal).then(allParkdata => {
+    console.log("Complete parking data: ", allParkdata);
+});
 
-// const RDWAllData = NPRORDWAllData[0].ParkingFacilities;
+async function launchData(parkingDataEndpoint) {
 
-// launchData();
-
-async function launchData() {
-
-    // Get all RDW parking data
-    // const allParkingFacilitiesData = getData(proxyUrl+RDWApiUrl);
-    const allParkingIntroData = RDWAllData;
-    console.log("All parking intro data: ", allParkingIntroData);
-
-    const completeParkingData = await configureParkingIntroData(allParkingIntroData);
-    console.log("Complete parking data: ", completeParkingData);
-
-    return completeParkingData;
+    return await configureParkingIntroData(parkingDataEndpoint);
 
 }
 
+// The base of this function from: https://vizhub.com/Razpudding/c2a9c9b4fde84816931c404951c79873
+async function configureParkingIntroData(parkingDataEndpoint) {
 
-async function configureParkingIntroData(allParkingIntroData) {
-
-    const limit = allParkingIntroData.slice(7900, 7974);
-    // Get the unique identifiers from dataset
-    // const parkingPlaceIdentifiers = allParkingIntroData.map((parking, index) => {
+    // Limit the amount of data included in the call
+    const limit = parkingDataEndpoint.slice(7900, 7974);
+    // Get the unique identifiers from the dataset
+    // const parkingPlaceIdentifiers = parkingDataEndpoint.map((parking, index) => {
     //     return parking.identifier;
     // });
 
+    // Get the unique identifiers from the dataset with limit
     const parkingPlaceIdentifiers = limit.map((parking, index) => {
         return parking.identifier;
     });
-    console.log("Unique identifiers: ", parkingPlaceIdentifiers);
 
     // Construct path to complete parking data API endpoint
     const baseUrl = proxyUrl + RDWApiUrl + 'static/';
     const allParkingFacilitiesData = parkingPlaceIdentifiers.map(identifier => getData(baseUrl + identifier));
 
-    console.log("All parking facilities data: ", allParkingFacilitiesData);
+    // Get all the parking facility data
     const parkingFacilitiesDataArray = await Promise.all(allParkingFacilitiesData);
 
-    const selectionParkingFacilitiesDataset = parkingFacilitiesDataArray.map(parkingFacility => {
-        console.log("PF: ", parkingFacility);
+    // From all the data return only the necessary endpoint
+    return parkingFacilitiesDataArray.map(parkingFacility => {
         return {
             city: getCities(parkingFacility),
             chargingPoint: getCarChargingPoints(parkingFacility),
             payment: getPaymentMethods(parkingFacility)
         }
     });
-
-    return selectionParkingFacilitiesDataset;
 }
 
 
@@ -81,14 +51,14 @@ async function getData(apiEndpoint) {
 
     // Perform a call to the API, this will be paused until completion
     const response = await fetch(apiEndpoint);
-    console.log("Response: ", response);
+    // console.log("Response: ", response);
 
-    // Try to delay fetch
+    // Try to delay fetch - nice tip from Marco
     setTimeout(()=> {let count = 0; count++;}, 2000);
 
     // Wait for the JSON response
     const data = await response.json();
-    console.log("Data: ", data);
+    // console.log("Data: ", data);
 
     return data;
 }
@@ -96,21 +66,16 @@ async function getData(apiEndpoint) {
 //Replace undefined city endpoints with null or return city data
 function getCities(data) {
 
-    console.log("In cities: ", data.parkingFacilityInformation.accessPoints);
-
         if ((typeof data.parkingFacilityInformation.accessPoints == 'undefined') || (typeof data.parkingFacilityInformation.accessPoints[0] == 'undefined') || (typeof data.parkingFacilityInformation.accessPoints[0].accessPointAddress == 'undefined') || (data.parkingFacilityInformation.accessPoints[0].accessPointAddress.city.length === 0)){
             return null;
         }
 
         return data.parkingFacilityInformation.accessPoints[0].accessPointAddress.city;
 
-
 }
 
 //Replace undefined car charging endpoints with null or return car charging data
 function getCarChargingPoints(data) {
-
-    console.log("In charging: ", data.parkingFacilityInformation.specifications);
 
         if((data.parkingFacilityInformation == null) || (typeof data.parkingFacilityInformation.specifications == 'undefined') || (data.parkingFacilityInformation.specifications[0] == null) || (data.parkingFacilityInformation.specifications[0].chargingPointCapacity == null)){
             return null;
@@ -122,8 +87,6 @@ function getCarChargingPoints(data) {
 
 //Replace undefined payment endpoints with null or return payment data
 function getPaymentMethods(data) {
-
-    console.log("In payment: ", data.parkingFacilityInformation.paymentMethods);
 
         if((data.parkingFacilityInformation == null) || (typeof data.parkingFacilityInformation.paymentMethods == 'undefined') || (data.parkingFacilityInformation.paymentMethods.length === 0)){
             return null;

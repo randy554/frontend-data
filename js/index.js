@@ -3,18 +3,19 @@ const RDWParkingAPI     = 'https://raw.githubusercontent.com/randy554/myAPI/main
 const CBSPopulationAPI  = 'https://raw.githubusercontent.com/randy554/myAPI/main/cbsBevolkingRandstad.json';
 
 
-getData(CBSPopulationAPI).then( cbsData => {
-
-    console.log("CBS data: ", cbsData);
-    const test3 = removeWordFromFieldValue(cbsData, "Regio's" ,"(gemeente)");
-    console.log("TEST3: ", test3);
-    const test4 = removeWhitespaceFromFieldValue(test3, "Regio's");
-    console.log("TEST4: ", test4);
-    const test5 = replaceFieldValue(test4, "Regio's", "'s-Gravenhage", "Den Haag");
-    console.log("TEST5: ", test5);
-    const test6 = filterCBSDataByYear(test5, '2020');
-    console.log('Filter by year:', test6);
-});
+// getData(CBSPopulationAPI).then( cbsData => {
+//
+//     console.log("CBS data: ", cbsData);
+//     const test3 = removeWordFromFieldValue(cbsData, "Regio's" ,"(gemeente)");
+//     console.log("TEST3: ", test3);
+//     const test4 = removeWhitespaceFromFieldValue(test3, "Regio's");
+//     console.log("TEST4: ", test4);
+//     const test5 = replaceFieldValue(test4, "Regio's", "'s-Gravenhage", "Den Haag");
+//     console.log("TEST5: ", test5);
+//     const test6 = filterCBSDataByYear(test5, '2020');
+//     console.log('Filter by year:', test6);
+// });
+//
 
 getData(RDWParkingAPI).then( rdwData => {
 
