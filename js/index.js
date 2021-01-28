@@ -7,19 +7,15 @@ getData(CBSPopulationAPI).then( cbsData => {
 
     // Remove a word from a field value
     const removedWordGemeenteFromRegioField = removeWordFromFieldValue(cbsData, "Regio's" ,"(gemeente)");
-    console.log("Remove (gemeente) in Regio field: ", removedWordGemeenteFromRegioField);
 
     // Remove whitespace from field
     const removeWhitespaceFromRegioField = removeWhitespaceFromFieldValue(removedWordGemeenteFromRegioField, "Regio's");
-    console.log("Remove whitespace in Regio field: ", removeWhitespaceFromRegioField);
 
     // Replace a field value with another value
     const renameCityField = replaceFieldValue(removeWhitespaceFromRegioField, "Regio's", "'s-Gravenhage", "Den Haag");
-    console.log("Rename city : ", renameCityField);
 
     // Get cities data per year
     const getCityDataByYear = filterCBSDataByYear(renameCityField, '2020');
-    console.log('Filter by year:', getCityDataByYear);
 
 });
 
