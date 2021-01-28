@@ -20,27 +20,27 @@ getData(CBSPopulationAPI).then( cbsData => {
 });
 
 
-// getData(RDWParkingAPI).then( rdwData => {
-//
-//     // Remove all null values from city field
-//     const removeEmptyCities = removeNullValues(rdwData, "city");
-//
-//     // Select data per city
-//     const listPerCity = filterByField(removeEmptyCities, "city", "Utrecht");
-//
-//     // List charging point statistics per city
-//     const listChargingPointsStatsPerCity = getChargingPointsStats(listPerCity);
-//
-//     // List all different payment methods per city
-//     const listPaymethodsPerCity = getAllPaymentMethods(listPerCity);
-//
-//     // Give totals of payment methods per city
-//     const listCountPerPaymethodsPerCity = getAllPaymentMethodCount(listPaymethodsPerCity);
-//
-//     // Give the total amount of a payment method
-//     const listCountPaymethodPerCity = getPaymentMethodCount(listPaymethodsPerCity, "AMEX");
-//
-// });
+getData(RDWParkingAPI).then( rdwData => {
+
+    // Remove all null values from city field
+    const removeEmptyCities = removeNullValues(rdwData, "city");
+
+    // Select data per city
+    const listPerCity = filterByField(removeEmptyCities, "city", "Utrecht");
+
+    // List charging point statistics per city
+    const listChargingPointsStatsPerCity = getChargingPointsStats(listPerCity);
+
+    // List all different payment methods per city
+    const listPaymethodsPerCity = getAllPaymentMethods(listPerCity);
+
+    // Give totals of payment methods per city
+    const listCountPerPaymethodsPerCity = getAllPaymentMethodCount(listPaymethodsPerCity);
+
+    // Give the total amount of a payment method
+    const listCountPaymethodPerCity = getPaymentMethodCount(listPaymethodsPerCity, "AMEX");
+
+});
 
 // Return data from a certain year
 function filterCBSDataByYear(data, year) {
