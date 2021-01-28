@@ -58,20 +58,6 @@ function filterCBSDataByYear(data, year) {
     });
 }
 
-// Remove word from regio value
-function removeGemeenteFromRegio (data, keyword) {
-
-    return data.map(value => {
-
-        if ((value["Regio's"].indexOf(keyword)) > 0){
-            value["Regio's"] = value["Regio's"].replace(keyword, '');
-            return value;
-        }else {
-            return value;
-        }
-
-    });
-}
 
 // Remove word from field value
 function removeWordFromFieldValue (data, field, keyword) {
@@ -88,16 +74,6 @@ function removeWordFromFieldValue (data, field, keyword) {
     });
 }
 
-// Remove whitespace from regio value
-function removeWhitespaceFromRegio (data) {
-
-    return data.map(value => {
-
-        value["Regio's"] = value["Regio's"].trim();
-        return value;
-
-    });
-}
 
 // Remove whitespace from field value
 function removeWhitespaceFromFieldValue (data, field) {
@@ -110,17 +86,6 @@ function removeWhitespaceFromFieldValue (data, field) {
     });
 }
 
-// Replace regio value
-function replaceRegioValue(data, currentRegioValue, newRegioValue) {
-
-    return data.map(value => {
-
-        if (value["Regio's"] === currentRegioValue){
-            value["Regio's"] = newRegioValue;
-        }
-        return value;
-    });
-}
 
 // Replace field value
 function replaceFieldValue(data, field, currentRegioValue, newRegioValue) {
